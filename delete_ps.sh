@@ -16,3 +16,8 @@ dirs=($(ls -d $PS_DIR/*/  | awk '{n=split($NF,a,"/");print  a[n-1]}'));
 echo "${users[*]}"
 echo "-----------"
 echo "${dirs[*]}"
+for i in "${dirs[@]}"
+do
+   :
+  echo $i
+done
