@@ -21,14 +21,14 @@ func handler(w http.ResponseWriter, req *http.Request) {
 func getUserHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	ret := []user{}
-	ret = append(ret, user{id: "test1", name: "name1"})
-	ret = append(ret, user{id: "test2", name: "name2"})
-	ret = append(ret, user{id: "test3", name: "name3"})
+	ret = append(ret, user{Id: "test1", Name: "name1"})
+	ret = append(ret, user{Id: "test2", Name: "name2"})
+	ret = append(ret, user{Id: "test3", Name: "name3"})
 	bytes, _ := json.Marshal(ret)
 	w.Write(bytes)
 }
 
 type user struct {
-	id   string `json:"id"`
-	name string `json:"name"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
