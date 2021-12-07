@@ -5,16 +5,22 @@ API_URL=http://$API_SERVER/api/v1/users
 JQUERY_STR=.data[].id
 PS_DIR=/home/ubuntu/testdir
 
+echo "# Quering Users from API Server"
 users=($(curl -sb -H "Accept: application/json" \
   -H "implicit-authenticated-for: bee.admin" \
   -H "Authorization: Bearer implicit-token" \
   $API_URL | jq -c $JQUERY_STR | tr -d '"'))
 
-echo "Total '${#users[@]}' users exist."
+echo "---------------------------------"
+echo " Total '${#users[@]}' users exist."
+echo "================================="
+echo "# Getting PS directories"
 
 dirs=($(ls -d $PS_DIR/*/  | awk '{n=split($NF,a,"/");print  a[n-1]}')); 
 
-echo "Total '${#dirs[@]}' project storage directories exist."
+echo "---------------------------------"
+echo " Total '${#dirs[@]}' project storage directories exist."
+echo "================================="
 
 delDirs=()
 for i in "${dirs[@]}"; do
@@ -24,8 +30,11 @@ for i in "${dirs[@]}"; do
     done
     [[ -n $skip ]] || delDirs+=("$i")
 done
+echo "# Compare users and directories"
+echo "---------------------------------"
+echo " Total '${#delDirs[@]}' project storage directories need to be deleted."
+echo "================================="
 
-echo "Total '${#delDirs[@]}' project storage directories need to be deleted."
 for i in "${delDirs[@]}"
 do
    :
@@ -35,5 +44,9 @@ do
   then
       echo "Deleting "$PS_DIR"/"$i
       #eval "rm -rf " $PS_DIR"/"$i
+      echo $PS_DIR"/"$i "is deleted"
+  else 
+      echo $PS_DIR"/"$i "is not deleted"
   fi
+  echo "---------------------------------"
 done
