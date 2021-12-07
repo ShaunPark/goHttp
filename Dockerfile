@@ -21,3 +21,5 @@ RUN apk --no-cache add tzdata && \
 RUN addgroup -S user && adduser -S user -G user
 USER user
 COPY --from=build /goHttp /goHttp
+EXPOSE 5000
+ENTRYPOINT ["/goHttp"]
