@@ -29,11 +29,11 @@ echo "Total '${#delDirs[@]}' project storage directories need to be deleted."
 for i in "${delDirs[@]}"
 do
    :
-  DELCMD="rm -rf " $PS_DIR"/"$i
-  read -p "Are you sure delete directory '"$PS_DIR"/"$i"'? (Y/n)" -n 1 -r
+  read -p "Are you sure delete directory '"$PS_DIR"/"$i"'? (Y/n) : " -n 1 -r
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]
   then
       echo "Deleting "$PS_DIR"/"$i
+      #eval "rm -rf " $PS_DIR"/"$i
   fi
 done
