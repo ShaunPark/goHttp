@@ -5,7 +5,7 @@ API_URL=http://$API_SERVER/api/v1/users
 JQUERY_STR=.data[].id
 PS_DIR=/home/ubuntu/testdir
 
-users=($(curl -sb -H "Accept: application/json" $API_URL | jq -c $JQUERY_STR))
+users=($(curl -sb -H "Accept: application/json" $API_URL | jq -c $JQUERY_STR) | tr -d '"')
 dirs=($(ls -d $PS_DIR/*/  | awk '{n=split($NF,a,"/");print  a[n-1]}')); 
 
 echo "${users[*]}"
