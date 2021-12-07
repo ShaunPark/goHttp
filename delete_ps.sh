@@ -11,10 +11,7 @@ curl -sb -H "Accept: application/json" $API_URL | jq -c $JQUERY_STR | while read
   users+=("$object")
 done
 
-dirs=()
-ls -d $PS_DIR/*/ | while read dir; do 
-  dirs+=($(echo $dir | awk '{n=split($NF,a,"/");print  a[n-1]}')); 
-done
+dirs=($(ls -d $PS_DIR/*/  | awk '{n=split($NF,a,"/");print  a[n-1]}')); 
 
 echo "${users[*]}"
 echo "-----------"
