@@ -24,7 +24,7 @@ rm $TEMP_USER_FILE
 
 if [[ ${#users[@]} -eq 0 ]]
 then
-  echo "Fail to get user list from API Server : "$rescode
+  echo "Fail to get user list from API Server : user count is 0"
   echo "================================="
   return 1
 fi
