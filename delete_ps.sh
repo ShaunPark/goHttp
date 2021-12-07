@@ -19,9 +19,15 @@ then
   echo "================================="
   return 1
 fi
-
 users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
 rm $TEMP_USER_FILE
+
+if [[ ${#users[@]} -eq 0 ]]
+then
+  echo "Fail to get user list from API Server : "$rescode
+  echo "================================="
+  return 1
+fi
 
 echo "---------------------------------"
 echo " Total '${#users[@]}' users exist."
