@@ -17,10 +17,11 @@ if [[ $rescode -ne "200" ]]
 then
   echo "Fail to get user list from API Server : "$rescode
   echo "================================="
-  exit 1
+  return 1
 fi
 
 users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
+rm $TEMP_USER_FILE
 
 echo "---------------------------------"
 echo " Total '${#users[@]}' users exist."
