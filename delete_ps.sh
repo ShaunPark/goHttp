@@ -17,10 +17,8 @@ for i in "${dirs[@]}"; do
     [[ -n $skip ]] || delDirs+=("$i")
 done
 
-echo "${delDirs[*]}"
-echo "-----------"
 for i in "${delDirs[@]}"
 do
    :
-  echo $i
+  echo "rm -rf " $PS_DIR"/"$i
 done
