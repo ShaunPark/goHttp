@@ -4,12 +4,22 @@ API_SERVER=localhost:5000
 API_URL=http://$API_SERVER/api/v1/users
 JQUERY_STR=.data[].id
 PS_DIR=/home/ubuntu/testdir
+TEMP_USER_FILE=./users.txt
 
 echo "# Quering Users from API Server"
-users=($(curl -sb -H "Accept: application/json" \
+rescode=$(curl -H "Accept: application/json" \
   -H "implicit-authenticated-for: bee.admin" \
   -H "Authorization: Bearer implicit-token" \
-  $API_URL | jq -c $JQUERY_STR | tr -d '"'))
+  -o $TEMP_USER_FILE -s -w "%{http_code}" \
+  $API_URL) 
+
+if [[ $rescode -ne "200" ]]
+then
+  echo "Fail to get user list from API Server : "$rescode
+  exit 1
+fi
+
+users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
 
 echo "---------------------------------"
 echo " Total '${#users[@]}' users exist."
