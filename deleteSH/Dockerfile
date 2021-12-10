@@ -1,7 +1,6 @@
-FROM alpine:3.14
+FROM ubuntu:3.14
 
-RUN apk add --no-cache curl
-RUN apk add --no-cache jq
+RUN apk update && apk add --no-cache bash && apk add --no-cache curl && apk add --no-cache jq
 
 WORKDIR /
 COPY delete_ps.sh delete_ps.sh
