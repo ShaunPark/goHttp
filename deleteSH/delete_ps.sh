@@ -60,7 +60,7 @@ for i in "${delDirs[@]}"
 do
    :
     echo "Deleting "$PS_DIR"/"$i $DRYRUN
-    if [[ $DRYRUN -eq "true" ]]
+    if [[ $DRYRUN == "true" ]]
     then
         echo "DRYRUN is true. skip deleting directory."
     else
