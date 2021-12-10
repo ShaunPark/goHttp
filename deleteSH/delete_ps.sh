@@ -17,13 +17,13 @@ rescode=$(curl -H "Accept: application/json" \
 
 if [[ $rescode =~ ^2 ]]
 then
+  users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
+  rm $TEMP_USER_FILE
 else
   echo "Fail to get user list from API Server : "$rescode
   echo "================================="
   exit 1
 fi
-users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
-rm $TEMP_USER_FILE
 
 if [[ ${#users[@]} -eq 0 ]]
 then
