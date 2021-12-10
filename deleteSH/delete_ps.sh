@@ -1,9 +1,11 @@
 #!/bin/bash
 
-API_SERVER=localhost:5000
+#API_SERVER=localhost:5000
+#PS_DIR=/home/ubuntu/testdir
+#DRYRUN=true
+
 API_URL=http://$API_SERVER/api/v1/users
 JQUERY_STR=.data[].id
-PS_DIR=/home/ubuntu/testdir
 TEMP_USER_FILE=./users.txt
 
 echo "# Quering Users from API Server"
@@ -13,7 +15,7 @@ rescode=$(curl -H "Accept: application/json" \
   -o $TEMP_USER_FILE -s -w "%{http_code}" \
   $API_URL) 
 
-if [[ $rescode -ne "200" ]]
+if [[ $rescode =~ ^2 ]]
 then
   echo "Fail to get user list from API Server : "$rescode
   echo "================================="
@@ -37,7 +39,7 @@ echo "# Getting PS directories"
 dirs=($(ls -d $PS_DIR/*/  | awk '{n=split($NF,a,"/");print  a[n-1]}')); 
 
 echo "---------------------------------"
-echo " Total '${#dirs[@]}' project storage directories exist."
+echo " Total '${#dirs[@]}' personal storage directories exist."
 echo "================================="
 
 delDirs=()
@@ -50,21 +52,18 @@ for i in "${dirs[@]}"; do
 done
 echo "# Compare users and directories"
 echo "---------------------------------"
-echo " Total '${#delDirs[@]}' project storage directories need to be deleted."
+echo " Total '${#delDirs[@]}' personal storage directories need to be deleted."
 echo "================================="
 
 for i in "${delDirs[@]}"
 do
    :
-  read -p "Are you sure delete directory '"$PS_DIR"/"$i"'? (Y/n) : " -n 1 -r
-  echo    # (optional) move to a new line
-  if [[ $REPLY =~ ^[Yy]$ ]]
-  then
-      echo "Deleting "$PS_DIR"/"$i
-      #eval "rm -rf " $PS_DIR"/"$i
-      echo $PS_DIR"/"$i "is deleted"
-  else 
-      echo $PS_DIR"/"$i "is not deleted"
-  fi
+    echo "Deleting "$PS_DIR"/"$i
+    if [[ $DRYRUN -eq "true"]]
+        echo "DRYRUN is true. skip deleting directory."
+    else
+        eval "rm -rf " $PS_DIR"/"$i
+        echo $PS_DIR"/"$i "is deleted"
+    fi
   echo "---------------------------------"
 done
