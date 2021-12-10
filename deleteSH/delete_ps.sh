@@ -19,7 +19,7 @@ if [[ $rescode =~ ^2 ]]
 then
   echo "Fail to get user list from API Server : "$rescode
   echo "================================="
-  return 1
+  exit 1
 fi
 users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
 rm $TEMP_USER_FILE
@@ -28,7 +28,7 @@ if [[ ${#users[@]} -eq 0 ]]
 then
   echo "Fail to get user list from API Server : user count is 0"
   echo "================================="
-  return 1
+  exit 1
 fi
 
 echo "---------------------------------"
@@ -59,7 +59,8 @@ for i in "${delDirs[@]}"
 do
    :
     echo "Deleting "$PS_DIR"/"$i
-    if [[ $DRYRUN -eq "true"]]
+    if [[ $DRYRUN -eq "true" ]]
+    then
         echo "DRYRUN is true. skip deleting directory."
     else
         eval "rm -rf " $PS_DIR"/"$i
@@ -67,3 +68,4 @@ do
     fi
   echo "---------------------------------"
 done
+exit 0
