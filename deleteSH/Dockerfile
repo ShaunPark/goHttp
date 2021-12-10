@@ -1,4 +1,4 @@
-FROM ubuntu:3.14
+FROM alpine:3.14
 
 RUN apk update && apk add --no-cache bash && apk add --no-cache curl && apk add --no-cache jq
 
