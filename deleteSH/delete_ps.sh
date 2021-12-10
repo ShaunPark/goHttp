@@ -15,7 +15,7 @@ rescode=$(curl -H "Accept: application/json" \
   -o $TEMP_USER_FILE -s -w "%{http_code}" \
   $API_URL) 
 
-if [[ $rescode =~ ^2 ]]
+if [[ $rescode == "2*" ]]
 then
   users=($(cat $TEMP_USER_FILE | jq -c $JQUERY_STR | tr -d '"'))
   rm $TEMP_USER_FILE
