@@ -17,6 +17,7 @@ rescode=$(curl -H "Accept: application/json" \
 
 if [[ $rescode =~ ^2 ]]
 then
+else
   echo "Fail to get user list from API Server : "$rescode
   echo "================================="
   exit 1
